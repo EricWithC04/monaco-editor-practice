@@ -38,18 +38,29 @@ function App() {
     })
   }
 
+  function handleDownload(nameFile, contentFile) {
+    const element = document.createElement("a")
+    const file = new Blob([contentFile], {type: 'text/plain'})
+    element.href = URL.createObjectURL(file)
+    element.download = `${nameFile}.py`
+    document.body.appendChild(element)
+    element.click()
+    document.body.removeChild(element)
+  }
+
   return (
     <>
       <Editor 
         height="90vh" 
         width="90vw" 
-        defaultLanguage='javascript' 
+        defaultLanguage='python' 
         theme='vs-dark'
         onMount={handleEditorDidMount}
         beforeMount={handleEditorWillMount}
         onValidate={handleEditorValidation}
         onChange={handleEditorChange} 
       />
+      <button onClick={() => handleDownload('app', outPut)}>Export Code</button>
       <button onClick={handleExecuteCode}>Execute</button>
     </>
   )
