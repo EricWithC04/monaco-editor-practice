@@ -6,11 +6,16 @@ function App() {
 
   const monacoRef = useRef(null)
   const [outPut, setOutPut] = useState('')
+  const [outPut2, setOutPut2] = useState('')
+  const [firstOutPut, setFirstOutPut] = useState(true)
 
   function handleEditorChange(value, event) {
     // here is the current value
     console.log("this is the current value:", value);
-    setOutPut(value)
+    console.log(monacoRef.current);
+    firstOutPut ?
+      setOutPut(value) :
+      setOutPut2(value)
   }
 
   function handleEditorDidMount(editor, monaco) {
@@ -33,7 +38,7 @@ function App() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        code: outPut
+        code: firstOutPut ? outPut : outPut2
       })
     })
   }
@@ -59,7 +64,9 @@ function App() {
         beforeMount={handleEditorWillMount}
         onValidate={handleEditorValidation}
         onChange={handleEditorChange} 
+        value={firstOutPut ? outPut : outPut2}
       />
+      <button onClick={() => setFirstOutPut(!firstOutPut)}>Change Code</button>
       <button onClick={() => handleDownload('app', outPut)}>Export Code</button>
       <button onClick={handleExecuteCode}>Execute</button>
     </>
