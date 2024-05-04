@@ -5,10 +5,7 @@ import Editor/* , { DiffEditor, useMonaco, loader } */ from '@monaco-editor/reac
 function App() {
 
   const monacoRef = useRef(null)
-  const [outPut, setOutPut] = useState('')
-  const [outPut2, setOutPut2] = useState('')
-  const [files, setFiles] = useState([{ name: 'app.py', code: '' }, { name: 'manage.py', code: '' }, { name: 'settings.py', code: '' }, { name: 'urls.py', code: '' }, { name: 'modules.py', code: '' }])
-  const [firstOutPut, setFirstOutPut] = useState(true)
+  const [files, setFiles] = useState([{ name: 'app.py', code: '' }, { name: 'manage.py', code: '' }])
   const [currentFile, setCurrentFile] = useState(0)
 
   function handleEditorChange(value, event) {
