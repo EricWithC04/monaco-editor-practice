@@ -56,13 +56,16 @@ function App() {
 
   return (
     <div className='main-bg vw-100 vh-100 d-flex'>
-      <ul className='list-group list-group-flush text-white'>
-        {
-          files.map((file, index) => {
-            return <li key={index} onClick={() => setCurrentFile(index)}>{file.name}</li>
-          })
-        }
-      </ul>
+      <div>
+        <ul className='list-group list-group-flush text-white'>
+          {
+            files.map((file, index) => {
+              return <li key={index} onClick={() => setCurrentFile(index)}>{file.name}</li>
+            })
+          }
+        </ul>
+        <button onClick={() => setFiles([...files, { name: 'newFile.py', code: '' }])}>New File</button>
+      </div>
       <div>
         <Editor 
           height="90vh" 
