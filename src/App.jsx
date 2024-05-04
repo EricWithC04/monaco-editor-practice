@@ -15,9 +15,6 @@ function App() {
     // here is the current value
     console.log("this is the current value:", value);
     console.log(monacoRef.current);
-    // firstOutPut ?
-    //   setOutPut(value) :
-    //   setOutPut2(value)
     const fileWithChanges = files.map((file, index) => index === currentFile ? { ...file, code: value } : file)
     setFiles(fileWithChanges)
   }
@@ -60,11 +57,11 @@ function App() {
   return (
     <div className='main-bg vw-100 vh-100 d-flex'>
       <ul className='list-group list-group-flush text-white'>
-        <li onClick={() => setCurrentFile(0)}>app.py</li>
-        <li onClick={() => setCurrentFile(1)}>manage.py</li>
-        <li onClick={() => setCurrentFile(2)}>settings.py</li>
-        <li onClick={() => setCurrentFile(3)}>urls.py</li>
-        <li onClick={() => setCurrentFile(4)}>modules.py</li>
+        {
+          files.map((file, index) => {
+            return <li key={index} onClick={() => setCurrentFile(index)}>{file.name}</li>
+          })
+        }
       </ul>
       <div>
         <Editor 
@@ -78,7 +75,6 @@ function App() {
           onChange={handleEditorChange} 
           value={files[currentFile].code}
         />
-        {/* <button onClick={() => setFirstOutPut(!firstOutPut)}>Change Code</button> */}
         <button onClick={() => handleDownload(files[currentFile].name, files[currentFile].code)}>Export Code</button>
         <button onClick={handleExecuteCode}>Execute</button>
       </div>
