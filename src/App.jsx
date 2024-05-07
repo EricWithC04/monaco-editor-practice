@@ -12,7 +12,6 @@ function App() {
   function handleEditorChange(value, event) {
     // here is the current value
     console.log("this is the current value:", value);
-    console.log(monacoRef.current);
     const fileWithChanges = files.map((file, index) => index === currentFile ? { ...file, code: value } : file)
     setFiles(fileWithChanges)
   }
@@ -70,6 +69,9 @@ function App() {
         code: files[currentFile].code
       })
     })
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(err => console.error(err))
   }
 
   function handleDownload(nameFile, contentFile) {
