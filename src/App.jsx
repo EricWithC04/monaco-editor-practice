@@ -31,10 +31,21 @@ function App() {
   }
 
   const handleCreateNewFile = () => {
-    if (nameNewFile.length > 0) {
+    const exists = files.some(file => file.name === nameNewFile)
+    if (exists) alert("No pueden haber 2 archivos con el mismo nombre!")
+    else if (nameNewFile.length > 0) {
       setFiles([...files, { name: nameNewFile, code: '' }])
+      setNameNewFile('')
     }
-    setNameNewFile('')
+  }
+
+  const handleDeleteFile = (name) => {
+    if (files[currentFile].name === name) alert("No puedes eliminar el archivo en el que estás parado!")
+    else {
+      const newFiles = files.filter(file => file.name !== name)
+      setCurrentFile(0)
+      setFiles(newFiles)
+    }
   }
 
   function handleExecuteCode() {
@@ -62,14 +73,19 @@ function App() {
   return (
     <div className='main-bg vw-100 vh-100 d-flex'>
       <div>
-        <ul className='list-group list-group-flush text-white'>
+        <ul className='list-group list-group-flush text-white p-2'>
           {
             files.map((file, index) => {
-              return <li key={index} onClick={() => setCurrentFile(index)}>{file.name}</li>
+              return (
+                <li key={index} className='d-flex justify-content-between'>
+                  <p onClick={() => setCurrentFile(index)}>{file.name}</p>
+                  <p onClick={() => handleDeleteFile(file.name)}>x</p>
+                </li>
+              )
             })
           }
         </ul>
-        <input type="text" className='w-100' value={nameNewFile} onChange={(e) => setNameNewFile(e.target.value)}/>
+        <input type="text" className='w-100' placeholder='Name...' value={nameNewFile} onChange={(e) => setNameNewFile(e.target.value)}/>
         <button onClick={handleCreateNewFile}>New File</button>
       </div>
       <div>
