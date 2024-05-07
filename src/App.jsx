@@ -5,8 +5,9 @@ import Editor/* , { DiffEditor, useMonaco, loader } */ from '@monaco-editor/reac
 function App() {
 
   const monacoRef = useRef(null)
-  const [files, setFiles] = useState([{ name: 'app.py', code: '' }, { name: 'manage.py', code: '' }])
+  const [files, setFiles] = useState([{ name: 'app.py', code: '' }])
   const [currentFile, setCurrentFile] = useState(0)
+  const [nameNewFile, setNameNewFile] = useState('')
 
   function handleEditorChange(value, event) {
     // here is the current value
@@ -27,6 +28,13 @@ function App() {
   function handleEditorValidation(markers) {
     // model markers
     // markers.forEach(marker => console.log('onValidate:', marker.message));
+  }
+
+  const handleCreateNewFile = () => {
+    if (nameNewFile.length > 0) {
+      setFiles([...files, { name: nameNewFile, code: '' }])
+    }
+    setNameNewFile('')
   }
 
   function handleExecuteCode() {
@@ -61,7 +69,8 @@ function App() {
             })
           }
         </ul>
-        <button onClick={() => setFiles([...files, { name: 'newFile.py', code: '' }])}>New File</button>
+        <input type="text" className='w-100' value={nameNewFile} onChange={(e) => setNameNewFile(e.target.value)}/>
+        <button onClick={handleCreateNewFile}>New File</button>
       </div>
       <div>
         <Editor 
