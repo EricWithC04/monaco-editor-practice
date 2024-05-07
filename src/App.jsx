@@ -60,6 +60,18 @@ function App() {
     })
   }
 
+  const handleLintCode = () => {
+    fetch('http://localhost:3000/lint-python', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        code: files[currentFile].code
+      })
+    })
+  }
+
   function handleDownload(nameFile, contentFile) {
     const element = document.createElement("a")
     const file = new Blob([contentFile], {type: 'text/plain'})
@@ -102,6 +114,7 @@ function App() {
         />
         <button onClick={() => handleDownload(files[currentFile].name, files[currentFile].code)}>Export Code</button>
         <button onClick={handleExecuteCode}>Execute</button>
+        <button onClick={handleLintCode}>Lint Code</button>
       </div>
     </div>
   )
