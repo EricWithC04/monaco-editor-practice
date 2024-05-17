@@ -48,7 +48,8 @@ function App() {
   }
 
   function handleExecuteCode() {
-    fetch('http://localhost:3000/execute', {
+    //http://localhost:3000/execute
+    fetch('http://localhost:3000/execute/fastapi', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -57,6 +58,9 @@ function App() {
         code: files[currentFile].code
       })
     })
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(err => console.error(err))
   }
 
   const handleLintCode = () => {
